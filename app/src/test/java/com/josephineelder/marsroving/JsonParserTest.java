@@ -2,6 +2,7 @@ package com.josephineelder.marsroving;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -26,5 +27,18 @@ public class JsonParserTest {
         assertThat(actualList.size(), is(equalTo(0)));
     }
 
+    @Test
+    public void parses_to_list_of_rovers() {
+        JsonParser parser = new JsonParser();
+
+        List<String> actualRovers = parser.getRovers(json);
+        List<String> expectedRovers = new ArrayList<>();
+        expectedRovers.add("Opportunity");
+        expectedRovers.add("Spirit");
+
+        assertThat(expectedRovers, is(equalTo(actualRovers)));
+    }
+
+    String json = "{\"rovers\": [{ \"id\": 6, \"name\": \"Opportunity\"\",}, { \"id\": 7,\"name\": \"Spirit\",}]}";
 
 }
