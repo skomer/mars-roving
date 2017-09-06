@@ -11,13 +11,15 @@ public class JsonParser {
 
     public List<String> getRovers(String json) {
         List<String> roversFromJson = new ArrayList<>();
-        RootJson rootJson = gson.fromJson(json, RootJson.class);
-        List<Rover> rootRovers = rootJson.getRovers();
 
-        for (int i = 0; i < rootRovers.size(); i++) {
-            roversFromJson.add(rootRovers.get(i).name);
+        if (!json.equals("")) {
+            RootJson rootJson = gson.fromJson(json, RootJson.class);
+            List<Rover> rootRovers = rootJson.getRovers();
+
+            for (int i = 0; i < rootRovers.size(); i++) {
+                roversFromJson.add(rootRovers.get(i).name);
+            }
         }
-
         return roversFromJson;
     }
 
