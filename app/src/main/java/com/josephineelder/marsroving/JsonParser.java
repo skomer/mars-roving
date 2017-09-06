@@ -12,7 +12,7 @@ public class JsonParser {
     public List<String> getRovers(String json) {
         List<String> roversFromJson = new ArrayList<>();
 
-        if (!json.equals("")) {
+        if (json != null && !json.equals("")) {
             RootJson rootJson = gson.fromJson(json, RootJson.class);
             List<Rover> rootRovers = rootJson.getRovers();
 
