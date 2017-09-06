@@ -15,14 +15,14 @@ public class OptionsActivityPresenterTest {
     @Before
     public void setUp() {
         view = mock(OptionsActivityView.class);
-        OptionsActivityPresenter presenter = new OptionsActivityPresenter(view);
+        presenter = new OptionsActivityPresenter(view);
     }
 
     @Test
-    public void on_view_onResume_presenter_makes_request_for_rovers() {
+    public void on_view_onResume_tells_view_to_show_results_of_request_for_rovers() {
         presenter.onResume();
 
-        verify(presenter).getRovers();
+        verify(view).showRovers();
     }
 
 }

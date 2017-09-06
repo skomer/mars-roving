@@ -69,7 +69,7 @@ public class OptionsActivity extends AppCompatActivity implements OptionsActivit
                 inputStream = new BufferedInputStream(client.getInputStream());
                 return convertStreamToString(inputStream);
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
             return "";
         } finally {
