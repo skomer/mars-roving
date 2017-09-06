@@ -39,6 +39,6 @@ public class JsonParserTest {
         assertThat(expectedRovers, is(equalTo(actualRovers)));
     }
 
-    String json = "{\"rovers\": [{ \"id\": 6, \"name\": \"Opportunity\"\",}, { \"id\": 7,\"name\": \"Spirit\",}]}";
+    String json = "{\"rovers\": [{ \"id\": 6, \"name\": \"Opportunity\"}, { \"id\": 7, \"name\": \"Spirit\"}]}";
 
 }

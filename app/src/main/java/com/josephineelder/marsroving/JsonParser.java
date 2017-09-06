@@ -7,15 +7,30 @@ import java.util.List;
 
 public class JsonParser {
 
-    Gson gson = new Gson();
+    private final Gson gson = new Gson();
 
     public List<String> getRovers(String json) {
-        List<String> rovers = new ArrayList<>();
+        List<String> roversFromJson = new ArrayList<>();
+        RootJson rootJson = gson.fromJson(json, RootJson.class);
+        List<Rover> rootRovers = rootJson.getRovers();
 
+        for (int i = 0; i < rootRovers.size(); i++) {
+            roversFromJson.add(rootRovers.get(i).name);
+        }
 
+        return roversFromJson;
+    }
 
+    private static class RootJson {
+        List<Rover> rovers;
 
-        return rovers;
+        public List<Rover> getRovers() {
+            return rovers;
+        }
+    }
+
+    private static class Rover {
+        String name;
     }
 
 }
