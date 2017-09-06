@@ -5,7 +5,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JsonParser {
+public class JsonParser implements JsonParsing {
 
     private final Gson gson = new Gson();
 

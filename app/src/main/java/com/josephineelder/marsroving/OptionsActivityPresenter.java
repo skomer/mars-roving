@@ -6,9 +6,11 @@ import java.util.List;
 public class OptionsActivityPresenter {
 
     OptionsActivityView view;
+    JsonParsing parser;
 
-    public OptionsActivityPresenter(OptionsActivityView view) {
+    public OptionsActivityPresenter(OptionsActivityView view, JsonParsing parser) {
         this.view = view;
+        this.parser = parser;
     }
 
     public void onResume() {
