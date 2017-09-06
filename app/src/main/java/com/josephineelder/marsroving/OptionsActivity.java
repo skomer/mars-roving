@@ -17,7 +17,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class OptionsActivity extends AppCompatActivity implements OptionsActivityView {
 
     TextView roverNames;
 
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         return builder.toString();
     }
 
-    private void displayMessage(final String message) {
+    public void displayMessage(final String message) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
