@@ -53,6 +53,10 @@ public class OptionsActivity extends AppCompatActivity implements OptionsActivit
 
     }
 
+    public void showRovers(List<String> rovers) {
+
+    }
+
     private String getRovers(final String path) throws MalformedURLException {
         HttpURLConnection client = null;
 

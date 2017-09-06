@@ -3,7 +3,11 @@ package com.josephineelder.marsroving;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyListOf;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -22,7 +26,7 @@ public class OptionsActivityPresenterTest {
     public void on_view_onResume_tells_view_to_show_results_of_request_for_rovers() {
         presenter.onResume();
 
-        verify(view).showRovers();
+        verify(view).showRovers(anyListOf(String.class));
     }
 
 }
