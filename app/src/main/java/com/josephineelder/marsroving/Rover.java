@@ -5,9 +5,9 @@ import java.util.List;
 public class Rover {
 
     public final String name;
-    public final List<String> cameras;
+    public final List<Camera> cameras;
 
-    public Rover(String name, List<String> cameras) {
+    public Rover(String name, List<Camera> cameras) {
         this.name = name;
         this.cameras = cameras;
     }

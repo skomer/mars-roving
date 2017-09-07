@@ -31,14 +31,18 @@ public class JsonParserTest {
     public void parses_to_list_of_rovers() {
         JsonParser parser = new JsonParser();
 
-        List<String> actualRovers = parser.getRovers(json);
-        List<String> expectedRovers = new ArrayList<>();
-        expectedRovers.add("Opportunity");
-        expectedRovers.add("Spirit");
+        List<Rover> actualRovers = parser.getRovers(json);
+
+        List<Rover> expectedRovers = new ArrayList<>();
+        List<Camera> cameras = new ArrayList<>();
+        cameras.add(new Camera("PANCAM", "Panoramic Camera"));
+        expectedRovers.add(new Rover("Opportunity", cameras));
+        expectedRovers.add(new Rover("Spirit", cameras));
 
         assertThat(expectedRovers, is(equalTo(actualRovers)));
     }
 
-    String json = "{\"rovers\": [{ \"id\": 6, \"name\": \"Opportunity\"}, { \"id\": 7, \"name\": \"Spirit\"}]}";
+    private String json = "{\"rovers\": [{ \"id\": 6, \"name\": \"Opportunity\", \"cameras\": [ { \"name\": \"PANCAM\", \"full_name\": \"Panoramic Camera\" } ]}, " +
+            "{ \"id\": 7, \"name\": \"Spirit\", \"cameras\": [ { \"name\": \"PANCAM\", \"full_name\": \"Panoramic Camera\" } ]} ]}";
 
 }
