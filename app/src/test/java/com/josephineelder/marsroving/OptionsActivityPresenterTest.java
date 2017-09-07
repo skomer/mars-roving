@@ -62,4 +62,25 @@ public class OptionsActivityPresenterTest {
         verify(parser, times(0)).getRovers(any(String.class));
     }
 
+    @Test
+    public void on_callback_providing_empty_json_view_displays_message() {
+        ArgumentCaptor<HttpCallback> captor = ArgumentCaptor.forClass(HttpCallback.class);
+
+        presenter.onResume();
+        verify(httpConnector).doRequest(any(String.class), captor.capture());
+        captor.getValue().success("");
+
+        verify(view).displayMessage("No rovers available");
+    }
+
+    @Test
+    public void on_callback_providing_null_json_view_displays_message() {
+        ArgumentCaptor<HttpCallback> captor = ArgumentCaptor.forClass(HttpCallback.class);
+
+        presenter.onResume();
+        verify(httpConnector).doRequest(any(String.class), captor.capture());
+        captor.getValue().success(null);
+
+        verify(view).displayMessage("No rovers available");
+    }
 }
