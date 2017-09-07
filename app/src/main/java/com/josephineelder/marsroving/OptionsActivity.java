@@ -28,7 +28,7 @@ public class OptionsActivity extends AppCompatActivity implements OptionsActivit
     }
 
     public void showRovers(List<String> rovers) {
-        displayMessage(rovers.toString());
+        roverNames.setText(rovers.toString());
     }
 
     public void displayMessage(final String message) {

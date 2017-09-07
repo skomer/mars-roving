@@ -37,5 +37,5 @@ public class OptionsActivityPresenterTest {
 
         verify(httpConnector).doRequest(eq("https://mars-photos.herokuapp.com/api/v1/rovers/"), any(HttpCallback.class));
     }
-    
+
 }
