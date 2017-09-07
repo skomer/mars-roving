@@ -27,7 +27,7 @@ public class OptionsActivityPresenter {
             }
             @Override
             public void failure(String responseCode) {
-                view.displayMessage("Request failed with response code" + responseCode);
+
             }
 
         });

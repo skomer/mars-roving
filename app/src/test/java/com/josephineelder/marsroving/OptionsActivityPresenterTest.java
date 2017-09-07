@@ -83,4 +83,16 @@ public class OptionsActivityPresenterTest {
 
         verify(view).displayMessage("No rovers available");
     }
+
+    @Test
+    public void on_callback_failure_view_displays_message() {
+        ArgumentCaptor<HttpCallback> captor = ArgumentCaptor.forClass(HttpCallback.class);
+
+        presenter.onResume();
+        verify(httpConnector).doRequest(any(String.class), captor.capture());
+        captor.getValue().failure("");
+
+        verify(view).displayMessage("No rovers available");
+    }
+
 }
