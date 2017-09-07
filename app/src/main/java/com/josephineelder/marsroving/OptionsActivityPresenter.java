@@ -4,9 +4,9 @@ import java.util.List;
 
 public class OptionsActivityPresenter {
 
-    OptionsActivityView view;
-    JsonParsing parser;
-    HttpConnecting httpConnector;
+    private OptionsActivityView view;
+    private JsonParsing parser;
+    private HttpConnecting httpConnector;
 
     public OptionsActivityPresenter(OptionsActivityView view, JsonParsing parser, HttpConnecting httpConnector) {
         this.view = view;
