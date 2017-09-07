@@ -27,7 +27,8 @@ public class OptionsActivityPresenter {
             }
             @Override
             public void failure(String responseCode) {
-
+                System.out.println("Request failed with response code" + responseCode);
+                view.displayMessage("No rovers available");
             }
 
         });
