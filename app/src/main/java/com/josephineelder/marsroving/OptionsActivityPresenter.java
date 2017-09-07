@@ -18,7 +18,7 @@ public class OptionsActivityPresenter {
         httpConnector.doRequest("https://mars-photos.herokuapp.com/api/v1/rovers/", new HttpCallback() {
             @Override
             public void success(String json) {
-                if (!"".equals(json)) {
+                if (null != json && !"".equals(json)) {
                     List<String> rovers = parser.getRovers(json);
                     view.showRovers(rovers);
                 }
