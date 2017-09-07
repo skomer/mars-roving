@@ -21,6 +21,8 @@ public class OptionsActivityPresenter {
                 if (null != json && !"".equals(json)) {
                     List<String> rovers = parser.getRovers(json);
                     view.showRovers(rovers);
+                } else {
+                    view.displayMessage("No rovers available");
                 }
             }
             @Override
