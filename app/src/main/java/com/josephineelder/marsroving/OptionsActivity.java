@@ -3,15 +3,15 @@ package com.josephineelder.marsroving;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Adapter;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
 
-public class OptionsActivity extends AppCompatActivity implements OptionsActivityView {
+public class OptionsActivity extends AppCompatActivity implements OptionsActivityView, AdapterView.OnItemSelectedListener {
 
     Spinner roversSpinner;
     OptionsActivityPresenter presenter;
@@ -23,7 +23,8 @@ public class OptionsActivity extends AppCompatActivity implements OptionsActivit
         setContentView(R.layout.activity_main);
         context = this;
 
-        roversSpinner = (Spinner) findViewById(R.id.roversSpinner);
+        roversSpinner = (Spinner) findViewById(R.id.rovers_spinner);
+        roversSpinner.setOnItemSelectedListener(this);
         presenter = new OptionsActivityPresenter(this, new JsonParser(), new HttpConnector());
     }
 
@@ -43,6 +44,10 @@ public class OptionsActivity extends AppCompatActivity implements OptionsActivit
             }
         });
     }
+
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {}
+
+    public void onNothingSelected(AdapterView<?> parent) {}
 
     public void displayMessage(final String message) {
         runOnUiThread(new Runnable() {
