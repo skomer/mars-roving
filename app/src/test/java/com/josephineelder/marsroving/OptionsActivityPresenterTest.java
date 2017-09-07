@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyListOf;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -30,4 +31,11 @@ public class OptionsActivityPresenterTest {
         verify(httpConnector).doRequest(any(String.class), any(HttpCallback.class));
     }
 
+    @Test
+    public void presenter_passes_this_url_to_connector_for_request() {
+        presenter.onResume();
+
+        verify(httpConnector).doRequest(eq("https://mars-photos.herokuapp.com/api/v1/rovers/"), any(HttpCallback.class));
+    }
+    
 }
