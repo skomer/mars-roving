@@ -14,6 +14,7 @@ import java.util.List;
 public class OptionsActivity extends AppCompatActivity implements OptionsActivityView, AdapterView.OnItemSelectedListener {
 
     Spinner roversSpinner;
+    Spinner camerasSpinner;
     OptionsActivityPresenter presenter;
     Context context;
 
@@ -25,6 +26,9 @@ public class OptionsActivity extends AppCompatActivity implements OptionsActivit
 
         roversSpinner = (Spinner) findViewById(R.id.rovers_spinner);
         roversSpinner.setOnItemSelectedListener(this);
+        camerasSpinner = (Spinner) findViewById(R.id.cameras_spinner);
+        camerasSpinner.setOnItemSelectedListener(this);
+
         presenter = new OptionsActivityPresenter(this, new JsonParser(), new HttpConnector());
     }
 
@@ -45,9 +49,27 @@ public class OptionsActivity extends AppCompatActivity implements OptionsActivit
         });
     }
 
-    public void showCameras(List<String> cameras) {}
+    public void showCameras(final List<String> cameras) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ArrayAdapter adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, cameras) {};
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                camerasSpinner.setAdapter(adapter);
+            }
+        });
+    }
 
-    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {}
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+        switch (parent.getId()) {
+            case R.id.rovers_spinner:
+                presenter.roverSelected(pos);
+                break;
+            case R.id.cameras_spinner:
+//                presenter.cameraSelected(pos);
+        }
+
+    }
 
     public void onNothingSelected(AdapterView<?> parent) {}
 
