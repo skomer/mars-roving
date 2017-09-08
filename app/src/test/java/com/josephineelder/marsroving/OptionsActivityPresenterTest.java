@@ -155,9 +155,19 @@ public class OptionsActivityPresenterTest {
     }
 
     @Test
-    public void on_getPhotos_button_tapped_presenter_tells_http_connector_to_make_request() {
+    public void on_get_photos_button_tapped_presenter_tells_http_connector_to_make_request() {
         presenter.getPhotosButtonTapped("", "", "");
 
         verify(httpConnector).doRequest(any(String.class), any(HttpCallback.class));
     }
+
+    @Test
+    public void on_get_photos_button_tapped_presenter_contructs_this_path_for_request() {
+        presenter.getPhotosButtonTapped("roverName", "camera", "date");
+
+        String expectedPath = "https://mars-photos.herokuapp.com/api/v1/rovers/roverName/photos?camera=camera&earth_date=date";
+
+        verify(httpConnector).doRequest(eq(expectedPath), any(HttpCallback.class));
+    }
+
 }
