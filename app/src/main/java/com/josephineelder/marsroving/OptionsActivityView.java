@@ -6,5 +6,6 @@ public interface OptionsActivityView {
 
     void displayMessage(String message);
     void showRovers(List<String> rovers);
+    void showCameras(List<String> cameras);
 
 }

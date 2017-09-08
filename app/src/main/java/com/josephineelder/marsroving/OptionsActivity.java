@@ -45,6 +45,8 @@ public class OptionsActivity extends AppCompatActivity implements OptionsActivit
         });
     }
 
+    public void showCameras(List<String> cameras) {}
+
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {}
 
     public void onNothingSelected(AdapterView<?> parent) {}

@@ -23,7 +23,7 @@ public class OptionsActivityPresenter {
                 if (null != json && !"".equals(json)) {
                     rovers = parser.getRovers(json);
                     List<String> roverNames = new ArrayList<>();
-                    for (int i = 0; i <rovers.size(); i++) {
+                    for (int i = 0; i < rovers.size(); i++) {
                         roverNames.add(rovers.get(i).name);
                     }
                     view.showRovers(roverNames);
@@ -38,6 +38,17 @@ public class OptionsActivityPresenter {
             }
 
         });
+    }
+
+    public void roverSelected(int position) {
+        Rover rover = rovers.get(position);
+        List<String> roverNames = new ArrayList<>();
+
+        for (int i = 0; i < rover.cameras.size(); i++) {
+            roverNames.add(rover.cameras.get(i).fullName);
+        }
+
+        view.showCameras(roverNames);
     }
 
 }

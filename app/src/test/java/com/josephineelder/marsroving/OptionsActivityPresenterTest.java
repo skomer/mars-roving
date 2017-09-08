@@ -108,15 +108,16 @@ public class OptionsActivityPresenterTest {
         ArgumentCaptor<HttpCallback> captor = ArgumentCaptor.forClass(HttpCallback.class);
         presenter.onResume();
         verify(httpConnector).doRequest(any(String.class), captor.capture());
-        captor.getValue().success("json");
         when(parser.getRovers("json")).thenReturn(rovers);
 
-        List<String> expectedCameras = new ArrayList<>();
-        expectedCameras.add("camera");
-        
+        captor.getValue().success("json");
+
+        List<String> expectedCameraNames = new ArrayList<>();
+        expectedCameraNames.add("camera");
+
         presenter.roverSelected(0);
 
-        verify(view).showCameras(expectedCameras);
+        verify(view).showCameras(expectedCameraNames);
     }
 
 }
