@@ -14,7 +14,7 @@ public class JsonParserTest {
     @Test
     public void on_receiving_empty_string_json_parser_returns_empty_arraylist() {
         JsonParser parser = new JsonParser();
-        List<String> actualList = parser.getRovers("");
+        List<Rover> actualList = parser.getRovers("");
 
         assertThat(actualList.size(), is(equalTo(0)));
     }
@@ -22,7 +22,7 @@ public class JsonParserTest {
     @Test
     public void on_receiving_null_json_parser_returns_empty_arraylist() {
         JsonParser parser = new JsonParser();
-        List<String> actualList = parser.getRovers(null);
+        List<Rover> actualList = parser.getRovers(null);
 
         assertThat(actualList.size(), is(equalTo(0)));
     }

@@ -34,11 +34,11 @@ public class OptionsActivity extends AppCompatActivity implements OptionsActivit
         presenter.onResume();
     }
 
-    public void showRovers(final List<String> rovers) {
+    public void showRovers(final List<Rover> rovers) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ArrayAdapter adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, rovers) {};
+                ArrayAdapter adapter = new ArrayAdapter<Rover>(context, android.R.layout.simple_spinner_dropdown_item, rovers) {};
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 roversSpinner.setAdapter(adapter);
             }

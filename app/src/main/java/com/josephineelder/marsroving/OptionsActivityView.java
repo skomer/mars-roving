@@ -5,6 +5,6 @@ import java.util.List;
 public interface OptionsActivityView {
 
     void displayMessage(String message);
-    void showRovers(List<String> rovers);
+    void showRovers(List<Rover> rovers);
 
 }

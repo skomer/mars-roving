@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface JsonParsing {
 
-    List<String> getRovers(String json);
+    List<Rover> getRovers(String json);
 
 }

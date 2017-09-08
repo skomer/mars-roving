@@ -19,7 +19,7 @@ public class OptionsActivityPresenter {
             @Override
             public void success(String json) {
                 if (null != json && !"".equals(json)) {
-                    List<String> rovers = parser.getRovers(json);
+                    List<Rover> rovers = parser.getRovers(json);
                     view.showRovers(rovers);
                 } else {
                     view.displayMessage("No rovers available");
