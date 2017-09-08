@@ -164,7 +164,6 @@ public class OptionsActivityPresenterTest {
     @Test
     public void on_get_photos_button_tapped_presenter_contructs_this_path_for_request() {
         presenter.getPhotosButtonTapped("roverName", "camera", "date");
-
         String expectedPath = "https://mars-photos.herokuapp.com/api/v1/rovers/roverName/photos?camera=camera&earth_date=date";
 
         verify(httpConnector).doRequest(eq(expectedPath), any(HttpCallback.class));
