@@ -52,4 +52,19 @@ public class OptionsActivityPresenter {
         view.showCameras(roverNames);
     }
 
+    public void getPhotosButtonTapped(String roverName, String camera, String date) {
+        httpConnector.doRequest("", new HttpCallback() {
+            @Override
+            public void success(String json) {
+
+
+            }
+            @Override
+            public void failure(String responseCode) {
+
+
+            }
+        });
+    }
+
 }
