@@ -21,7 +21,6 @@ public class Rover {
 
         if (name != null ? !name.equals(rover.name) : rover.name != null) return false;
         return cameras != null ? cameras.equals(rover.cameras) : rover.cameras == null;
-
     }
 
     @Override

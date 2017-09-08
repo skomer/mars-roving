@@ -6,15 +6,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.List;
 
-public class OptionsActivity extends AppCompatActivity implements OptionsActivityView, AdapterView.OnItemSelectedListener {
+public class OptionsActivity extends AppCompatActivity implements OptionsActivityView, AdapterView.OnItemSelectedListener, Button.OnClickListener {
 
     Spinner roversSpinner;
     Spinner camerasSpinner;
+    Button getPhotosButton;
     OptionsActivityPresenter presenter;
     Context context;
 
@@ -28,6 +30,8 @@ public class OptionsActivity extends AppCompatActivity implements OptionsActivit
         roversSpinner.setOnItemSelectedListener(this);
         camerasSpinner = (Spinner) findViewById(R.id.cameras_spinner);
         camerasSpinner.setOnItemSelectedListener(this);
+        getPhotosButton = (Button) findViewById(R.id.get_photos_button);
+        getPhotosButton.setOnClickListener(this);
 
         presenter = new OptionsActivityPresenter(this, new JsonParser(), new HttpConnector());
     }
@@ -60,16 +64,16 @@ public class OptionsActivity extends AppCompatActivity implements OptionsActivit
         });
     }
 
-    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        switch (parent.getId()) {
-            case R.id.rovers_spinner:
-                presenter.roverSelected(pos);
-                break;
-            case R.id.cameras_spinner:
-//                presenter.cameraSelected(pos);
-        }
+    @Override
+    public void onClick(View view) {
+        String roverName = roversSpinner.getSelectedItem().toString();
+        String cameraName = camerasSpinner.getTransitionName();
 
+//        presenter.getPhotosButtonTapped(roverName, cameraName);
     }
+
+
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {}
 
     public void onNothingSelected(AdapterView<?> parent) {}
 
