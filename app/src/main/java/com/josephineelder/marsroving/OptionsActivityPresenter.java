@@ -23,6 +23,7 @@ public class OptionsActivityPresenter {
                 if (null != json && !"".equals(json)) {
                     rovers = parser.getRovers(json);
                     List<String> roverNames = new ArrayList<>();
+                    roverNames.add("");
                     for (int i = 0; i < rovers.size(); i++) {
                         roverNames.add(rovers.get(i).name);
                     }
