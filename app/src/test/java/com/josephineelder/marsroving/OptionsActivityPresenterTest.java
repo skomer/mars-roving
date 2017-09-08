@@ -154,4 +154,10 @@ public class OptionsActivityPresenterTest {
         verify(view).showRovers(eq(expectedRoverNames));
     }
 
+    @Test
+    public void on_getPhotos_button_tapped_presenter_tells_http_connector_to_make_request() {
+        presenter.getPhotosButtonTapped("", "", "");
+
+        verify(httpConnector).doRequest(any(String.class), any(HttpCallback.class));
+    }
 }
