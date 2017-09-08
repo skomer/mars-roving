@@ -1,5 +1,6 @@
 package com.josephineelder.marsroving;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OptionsActivityPresenter {
@@ -20,7 +21,11 @@ public class OptionsActivityPresenter {
             public void success(String json) {
                 if (null != json && !"".equals(json)) {
                     List<Rover> rovers = parser.getRovers(json);
-                    view.showRovers(rovers);
+                    List<String> roverNames = new ArrayList<>();
+                    for (int i = 0; i <rovers.size(); i++) {
+                        roverNames.add(rovers.get(i).name);
+                    }
+                    view.showRovers(roverNames);
                 } else {
                     view.displayMessage("No rovers available");
                 }
