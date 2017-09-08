@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyListOf;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -88,22 +89,20 @@ public class OptionsActivityPresenterTest {
     }
 
     @Test
-    public void on_callback_failure_view_displays_message() {
+    public void on_callback_success_with_json_presenter_tells_view_to_show_rovers() {
         ArgumentCaptor<HttpCallback> captor = ArgumentCaptor.forClass(HttpCallback.class);
+        List<Rover> rovers = new ArrayList<>();
 
         presenter.onResume();
         verify(httpConnector).doRequest(any(String.class), captor.capture());
-        captor.getValue().failure("");
 
-        verify(view).displayMessage("No rovers available");
+        when(parser.getRovers("json")).thenReturn(rovers);
+        captor.getValue().success("json");
+
+        verify(view).showRovers(anyListOf(String.class));
     }
 
     @Test
-    public void on_rover_selected_presenter_tells_view_to_show_cameras() {
-        List<Camera> cameras = new ArrayList<>();
-        cameras.add(new Camera("CAM", "camera"));
-        List<Rover> rovers = new ArrayList<>();
-        rovers.add(new Rover("Rover", cameras));
 
         ArgumentCaptor<HttpCallback> captor = ArgumentCaptor.forClass(HttpCallback.class);
         presenter.onResume();
