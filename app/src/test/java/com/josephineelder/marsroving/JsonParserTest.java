@@ -36,13 +36,13 @@ public class JsonParserTest {
         List<Rover> expectedRovers = new ArrayList<>();
         List<Camera> cameras = new ArrayList<>();
         cameras.add(new Camera("PANCAM", "Panoramic Camera"));
-        expectedRovers.add(new Rover("Opportunity", cameras));
-        expectedRovers.add(new Rover("Spirit", cameras));
+        expectedRovers.add(new Rover("Opportunity", "2000-01-01", "500", cameras));
+        expectedRovers.add(new Rover("Spirit", "2000-01-01", "500", cameras));
 
         assertThat(expectedRovers, is(equalTo(actualRovers)));
     }
 
-    private String json = "{\"rovers\": [{ \"id\": 6, \"name\": \"Opportunity\", \"cameras\": [ { \"name\": \"PANCAM\", \"full_name\": \"Panoramic Camera\" } ]}, " +
-            "{ \"id\": 7, \"name\": \"Spirit\", \"cameras\": [ { \"name\": \"PANCAM\", \"full_name\": \"Panoramic Camera\" } ]} ]}";
+    private String json = "{\"rovers\": [{ \"id\": 6, \"name\": \"Opportunity\", \"landing_date\": \"2000-01-01\", \"max_sol\": \"500\", \"cameras\": [ { \"name\": \"PANCAM\", \"full_name\": \"Panoramic Camera\" } ]}, " +
+            "{ \"id\": 7, \"name\": \"Spirit\", \"landing_date\": \"2000-01-01\", \"max_sol\": \"500\", \"cameras\": [ { \"name\": \"PANCAM\", \"full_name\": \"Panoramic Camera\" } ]} ]}";
 
 }

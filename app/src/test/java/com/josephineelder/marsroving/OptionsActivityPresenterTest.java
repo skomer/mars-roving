@@ -118,7 +118,7 @@ public class OptionsActivityPresenterTest {
         List<Camera> cameras = new ArrayList<>();
         cameras.add(new Camera("CAM", "camera"));
         List<Rover> rovers = new ArrayList<>();
-        rovers.add(new Rover("Rover", cameras));
+        rovers.add(new Rover("Rover", "landing_date", "max_sol", cameras));
 
         ArgumentCaptor<HttpCallback> captor = ArgumentCaptor.forClass(HttpCallback.class);
         presenter.onResume();
@@ -139,7 +139,7 @@ public class OptionsActivityPresenterTest {
     public void presenter_adds_default_value_to_list_of_rover_names() {
         ArgumentCaptor<HttpCallback> captor = ArgumentCaptor.forClass(HttpCallback.class);
         List<Rover> rovers = new ArrayList<>();
-        rovers.add(new Rover("rover", new ArrayList<Camera>()));
+        rovers.add(new Rover("rover", "landing_date", "max_sol", new ArrayList<Camera>()));
 
         List<String> expectedRoverNames = new ArrayList<>();
         expectedRoverNames.add("");
@@ -162,9 +162,17 @@ public class OptionsActivityPresenterTest {
     }
 
     @Test
-    public void on_get_photos_button_tapped_presenter_contructs_this_path_for_request() {
+    public void on_get_photos_button_tapped_and_values_provided_presenter_contructs_this_path_for_request() {
         presenter.getPhotosButtonTapped("roverName", "camera", "date");
         String expectedPath = "https://mars-photos.herokuapp.com/api/v1/rovers/roverName/photos?camera=camera&earth_date=date";
+
+        verify(httpConnector).doRequest(eq(expectedPath), any(HttpCallback.class));
+    }
+
+    @Test
+    public void on_get_photos_button_tapped_and_camera_and_date_not_provided_presenter_constructs_this_path() {
+        presenter.getPhotosButtonTapped("roverName", "", "");
+        String expectedPath = "https://mars-photos.herokuapp.com/api/v1/rovers/roverName/photos?sol=";
 
         verify(httpConnector).doRequest(eq(expectedPath), any(HttpCallback.class));
     }

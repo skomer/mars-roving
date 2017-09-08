@@ -1,14 +1,22 @@
 package com.josephineelder.marsroving;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class Rover {
 
     public final String name;
+    @SerializedName("landing_date")
+    public final String landingDate;
+    @SerializedName("max_sol")
+    public final String maxSol;
     public final List<Camera> cameras;
 
-    public Rover(String name, List<Camera> cameras) {
+    public Rover(String name, String landingDate, String maxSol, List<Camera> cameras) {
         this.name = name;
+        this.landingDate = landingDate;
+        this.maxSol = maxSol;
         this.cameras = cameras;
     }
 

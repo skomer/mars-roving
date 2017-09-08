@@ -27,7 +27,11 @@ public class JsonParser implements JsonParsing {
                     );
                     cameras.add(camera);
                 }
-                roversFromJson.add(new Rover(rover.name, cameras));
+                roversFromJson.add(new Rover(
+                        rover.name,
+                        rover.landingDate,
+                        rover.maxSol,
+                        cameras));
             }
         }
         return roversFromJson;
