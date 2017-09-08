@@ -4,6 +4,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
@@ -93,6 +96,27 @@ public class OptionsActivityPresenterTest {
         captor.getValue().failure("");
 
         verify(view).displayMessage("No rovers available");
+    }
+
+    @Test
+    public void on_rover_selected_presenter_tells_view_to_show_cameras() {
+        List<Camera> cameras = new ArrayList<>();
+        cameras.add(new Camera("CAM", "camera"));
+        List<Rover> rovers = new ArrayList<>();
+        rovers.add(new Rover("Rover", cameras));
+
+        ArgumentCaptor<HttpCallback> captor = ArgumentCaptor.forClass(HttpCallback.class);
+        presenter.onResume();
+        verify(httpConnector).doRequest(any(String.class), captor.capture());
+        captor.getValue().success("json");
+        when(parser.getRovers("json")).thenReturn(rovers);
+
+        List<String> expectedCameras = new ArrayList<>();
+        expectedCameras.add("camera");
+        
+        presenter.roverSelected(0);
+
+        verify(view).showCameras(expectedCameras);
     }
 
 }

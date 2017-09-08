@@ -8,6 +8,7 @@ public class OptionsActivityPresenter {
     private OptionsActivityView view;
     private JsonParsing parser;
     private HttpConnecting httpConnector;
+    List<Rover> rovers;
 
     public OptionsActivityPresenter(OptionsActivityView view, JsonParsing parser, HttpConnecting httpConnector) {
         this.view = view;
@@ -20,7 +21,7 @@ public class OptionsActivityPresenter {
             @Override
             public void success(String json) {
                 if (null != json && !"".equals(json)) {
-                    List<Rover> rovers = parser.getRovers(json);
+                    rovers = parser.getRovers(json);
                     List<String> roverNames = new ArrayList<>();
                     for (int i = 0; i <rovers.size(); i++) {
                         roverNames.add(rovers.get(i).name);
