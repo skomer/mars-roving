@@ -54,7 +54,19 @@ public class OptionsActivityPresenter {
 
     public void getPhotosButtonTapped(String roverName, String camera) {
         String basePath = "https://mars-photos.herokuapp.com/api/v1/rovers/";
-        String path = basePath + roverName + "/photos?camera=" + camera + "&earth_date=";
+        String path;
+        if (null != camera && !"".equals(camera)) {
+            path = basePath
+                    + roverName
+                    + "/photos?"
+                    + ""
+                    + "&camera="
+                    + camera;
+        } else {
+            path = basePath
+                    + roverName
+                    + "/photos?";
+        }
 
         httpConnector.doRequest(path, new HttpCallback() {
             @Override
