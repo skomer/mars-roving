@@ -2,6 +2,7 @@ package com.josephineelder.marsroving;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.AdditionalMatchers;
 import org.mockito.ArgumentCaptor;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.List;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyListOf;
+import static org.mockito.Matchers.contains;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.matches;
 import static org.mockito.Mockito.mock;
@@ -174,6 +176,13 @@ public class OptionsActivityPresenterTest {
         presenter.getPhotosButtonTapped("roverName", "camera");
 
         verify(httpConnector).doRequest(matches("(https://mars-photos.herokuapp.com/api/v1/rovers/roverName/photos?.*.&camera=camera)"), any(HttpCallback.class));
+    }
+
+    @Test
+    public void on_get_photos_button_tapped_and_camera_not_provided_presenter_constructs_path_with_no_camera() {
+        presenter.getPhotosButtonTapped("roverName", "");
+
+        verify(httpConnector).doRequest(AdditionalMatchers.not(contains("&camera=")), any(HttpCallback.class));
     }
 
 }
