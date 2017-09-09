@@ -162,22 +162,6 @@ public class OptionsActivityPresenterTest {
         verify(httpConnector).doRequest(any(String.class), any(HttpCallback.class));
     }
 
-//    @Test
-//    public void on_get_photos_button_tapped_and_values_provided_presenter_contructs_this_path_for_request() {
-//        presenter.getPhotosButtonTapped("roverName", "camera", "date");
-//        String expectedPath = "https://mars-photos.herokuapp.com/api/v1/rovers/roverName/photos?camera=camera&earth_date=date";
-//
-//        verify(httpConnector).doRequest(eq(expectedPath), any(HttpCallback.class));
-//    }
-//
-//    @Test
-//    public void on_get_photos_button_tapped_and_camera_not_provided_presenter_constructs_this_path() {
-//        presenter.getPhotosButtonTapped("roverName", "");
-//        String expectedPath = "https://mars-photos.herokuapp.com/api/v1/rovers/roverName/photos?sol=";
-//
-//        verify(httpConnector).doRequest(eq(expectedPath), any(HttpCallback.class));
-//    }
-
     @Test
     public void on_get_photos_button_tapped_presenter_constructs_path_with_this_stem() {
         presenter.getPhotosButtonTapped("roverName", "");
@@ -185,5 +169,11 @@ public class OptionsActivityPresenterTest {
         verify(httpConnector).doRequest(matches("(https://mars-photos.herokuapp.com/api/v1/rovers/roverName/photos?.*)"), any(HttpCallback.class));
     }
 
+    @Test
+    public void on_get_photos_button_tapped_and_camera_provided_presenter_constructs_path_with_camera() {
+        presenter.getPhotosButtonTapped("roverName", "camera");
+
+        verify(httpConnector).doRequest(matches("(https://mars-photos.herokuapp.com/api/v1/rovers/roverName/photos?.*.&camera=camera)"), any(HttpCallback.class));
+    }
 
 }
