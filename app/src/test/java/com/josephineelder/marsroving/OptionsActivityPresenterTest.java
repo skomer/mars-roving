@@ -185,4 +185,11 @@ public class OptionsActivityPresenterTest {
         verify(httpConnector).doRequest(AdditionalMatchers.not(contains("&camera=")), any(HttpCallback.class));
     }
 
+    @Test
+    public void on_get_photos_button_tapped_and_date_provided_presenter_constructs_path_with_date() {
+        presenter.getPhotosButtonTapped("roverName", "", "2017-01-01");
+
+        verify(httpConnector).doRequest(eq("https://mars-photos.herokuapp.com/api/v1/rovers/roverName/photos?earth_date=2017-01-01"), any(HttpCallback.class));
+    }
+
 }

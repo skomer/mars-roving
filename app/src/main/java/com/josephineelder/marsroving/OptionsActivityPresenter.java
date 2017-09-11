@@ -49,6 +49,7 @@ public class OptionsActivityPresenter {
                 for (int j = 0; j < rovers.get(i).cameras.size(); j++) {
                     cameraNames.add(rovers.get(i).cameras.get(j).fullName);
                 }
+                break;
             }
         }
 
