@@ -69,7 +69,7 @@ public class OptionsActivity extends AppCompatActivity implements OptionsActivit
         String roverName = roversSpinner.getSelectedItem().toString();
         String cameraName = camerasSpinner.getTransitionName();
 
-        presenter.getPhotosButtonTapped(roverName, cameraName);
+        presenter.getPhotosButtonTapped(roverName, cameraName, "");
     }
 
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {

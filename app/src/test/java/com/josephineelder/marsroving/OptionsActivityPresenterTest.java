@@ -159,28 +159,28 @@ public class OptionsActivityPresenterTest {
 
     @Test
     public void on_get_photos_button_tapped_presenter_tells_http_connector_to_make_request() {
-        presenter.getPhotosButtonTapped("", "");
+        presenter.getPhotosButtonTapped("", "", "");
 
         verify(httpConnector).doRequest(any(String.class), any(HttpCallback.class));
     }
 
     @Test
     public void on_get_photos_button_tapped_presenter_constructs_path_with_this_stem() {
-        presenter.getPhotosButtonTapped("roverName", "");
+        presenter.getPhotosButtonTapped("roverName", "", "");
 
         verify(httpConnector).doRequest(matches("(https://mars-photos.herokuapp.com/api/v1/rovers/roverName/photos?.*)"), any(HttpCallback.class));
     }
 
     @Test
     public void on_get_photos_button_tapped_and_camera_provided_presenter_constructs_path_with_camera() {
-        presenter.getPhotosButtonTapped("roverName", "camera");
+        presenter.getPhotosButtonTapped("roverName", "camera", "");
 
         verify(httpConnector).doRequest(matches("(https://mars-photos.herokuapp.com/api/v1/rovers/roverName/photos?.*.&camera=camera)"), any(HttpCallback.class));
     }
 
     @Test
     public void on_get_photos_button_tapped_and_camera_not_provided_presenter_constructs_path_with_no_camera() {
-        presenter.getPhotosButtonTapped("roverName", "");
+        presenter.getPhotosButtonTapped("roverName", "", "");
 
         verify(httpConnector).doRequest(AdditionalMatchers.not(contains("&camera=")), any(HttpCallback.class));
     }

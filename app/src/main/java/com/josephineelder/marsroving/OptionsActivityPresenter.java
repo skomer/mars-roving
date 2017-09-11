@@ -56,7 +56,7 @@ public class OptionsActivityPresenter {
         view.showCameras(cameraNames);
     }
 
-    public void getPhotosButtonTapped(String roverName, String camera) {
+    public void getPhotosButtonTapped(String roverName, String camera, String date) {
         String basePath = "https://mars-photos.herokuapp.com/api/v1/rovers/";
         String path;
         if (null != camera && !"".equals(camera)) {
