@@ -19,8 +19,6 @@ public class UrlBuilder implements UrlBuilding {
                     + "/photos?";
         }
 
-
-
         return path;
     }
 

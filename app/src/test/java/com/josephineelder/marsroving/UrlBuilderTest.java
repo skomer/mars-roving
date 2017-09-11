@@ -8,8 +8,8 @@ import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.contains;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.matches;
 import static org.mockito.Mockito.verify;
+import static org.hamcrest.Matchers.matchesPattern;
 
 public class UrlBuilderTest {
 
@@ -19,13 +19,13 @@ public class UrlBuilderTest {
     public void setUp() {
         builder = new UrlBuilder();
     }
-    
+
     @Test
     public void on_get_photos_button_tapped_presenter_constructs_path_with_this_stem() {
         String expectedUrl = "(https://mars-photos.herokuapp.com/api/v1/rovers/roverName/photos?.*)";
         String actualUrl = builder.buildUrl("roverName", "", "");
 
-        assertEquals(expectedUrl, actualUrl);
+        assertThat(actualUrl, matchesPattern(expectedUrl));
     }
 
     @Test
@@ -33,7 +33,7 @@ public class UrlBuilderTest {
         String expectedUrl = "(https://mars-photos.herokuapp.com/api/v1/rovers/roverName/photos?.*.&camera=camera)";
         String actualUrl = builder.buildUrl("roverName", "", "camera");
 
-        assertEquals(expectedUrl, actualUrl);
+        assertThat(actualUrl, matchesPattern(expectedUrl));
     }
 
 //    @Test
