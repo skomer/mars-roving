@@ -160,10 +160,13 @@ public class OptionsActivityPresenterTest {
     }
 
     @Test
-    public void on_get_photos_button_tapped_presenter_tells_http_connector_to_make_request() {
+    public void on_get_photos_button_tapped_presenter_tells_http_connector_to_make_request_with_path() {
+        when(urlBuilder.buildUrl("", "", "")).thenReturn("path");
+
         presenter.getPhotosButtonTapped("", "", "");
 
-        verify(httpConnector).doRequest(any(String.class), any(HttpCallback.class));
+        verify(urlBuilder).buildUrl("", "", "");
+        verify(httpConnector).doRequest(eq("path"), any(HttpCallback.class));
     }
 
 }
