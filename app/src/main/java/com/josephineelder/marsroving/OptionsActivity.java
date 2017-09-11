@@ -33,7 +33,7 @@ public class OptionsActivity extends AppCompatActivity implements OptionsActivit
         getPhotosButton = (Button) findViewById(R.id.get_photos_button);
         getPhotosButton.setOnClickListener(this);
 
-        presenter = new OptionsActivityPresenter(this, new JsonParser(), new HttpConnector());
+        presenter = new OptionsActivityPresenter(this, new JsonParser(), new HttpConnector(), new UrlBuilder());
     }
 
     @Override
@@ -69,7 +69,7 @@ public class OptionsActivity extends AppCompatActivity implements OptionsActivit
         String roverName = roversSpinner.getSelectedItem().toString();
         String cameraName = camerasSpinner.getTransitionName();
 
-        presenter.getPhotosButtonTapped(roverName, cameraName, "");
+        presenter.getPhotosButtonTapped(roverName, "", cameraName);
     }
 
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {

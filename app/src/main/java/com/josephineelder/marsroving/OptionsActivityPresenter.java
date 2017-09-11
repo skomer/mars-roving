@@ -8,12 +8,14 @@ public class OptionsActivityPresenter {
     private OptionsActivityView view;
     private JsonParsing parser;
     private HttpConnecting httpConnector;
+    private UrlBuilding urlBuilder;
     private List<Rover> rovers;
 
-    public OptionsActivityPresenter(OptionsActivityView view, JsonParsing parser, HttpConnecting httpConnector) {
+    public OptionsActivityPresenter(OptionsActivityView view, JsonParsing parser, HttpConnecting httpConnector, UrlBuilding urlBuilder) {
         this.view = view;
         this.parser = parser;
         this.httpConnector = httpConnector;
+        this.urlBuilder = urlBuilder;
     }
 
     public void onResume() {
@@ -56,21 +58,8 @@ public class OptionsActivityPresenter {
         view.showCameras(cameraNames);
     }
 
-    public void getPhotosButtonTapped(String roverName, String camera, String date) {
-        String basePath = "https://mars-photos.herokuapp.com/api/v1/rovers/";
-        String path;
-        if (null != camera && !"".equals(camera)) {
-            path = basePath
-                    + roverName
-                    + "/photos?"
-                    + ""
-                    + "&camera="
-                    + camera;
-        } else {
-            path = basePath
-                    + roverName
-                    + "/photos?";
-        }
+    public void getPhotosButtonTapped(String roverName, String date, String camera) {
+        String path = urlBuilder.buildUrl(roverName, date, camera);
 
         httpConnector.doRequest(path, new HttpCallback() {
             @Override

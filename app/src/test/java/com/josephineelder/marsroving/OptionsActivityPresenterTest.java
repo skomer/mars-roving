@@ -23,6 +23,7 @@ public class OptionsActivityPresenterTest {
     private OptionsActivityView view;
     private JsonParsing parser;
     private HttpConnecting httpConnector;
+    private UrlBuilding urlBuilder;
     private OptionsActivityPresenter presenter;
 
     @Before
@@ -30,7 +31,8 @@ public class OptionsActivityPresenterTest {
         view = mock(OptionsActivityView.class);
         parser = mock(JsonParsing.class);
         httpConnector = mock(HttpConnecting.class);
-        presenter = new OptionsActivityPresenter(view, parser, httpConnector);
+        urlBuilder = mock(UrlBuilding.class);
+        presenter = new OptionsActivityPresenter(view, parser, httpConnector, urlBuilder);
     }
 
     @Test
@@ -162,34 +164,6 @@ public class OptionsActivityPresenterTest {
         presenter.getPhotosButtonTapped("", "", "");
 
         verify(httpConnector).doRequest(any(String.class), any(HttpCallback.class));
-    }
-
-    @Test
-    public void on_get_photos_button_tapped_presenter_constructs_path_with_this_stem() {
-        presenter.getPhotosButtonTapped("roverName", "", "");
-
-        verify(httpConnector).doRequest(matches("(https://mars-photos.herokuapp.com/api/v1/rovers/roverName/photos?.*)"), any(HttpCallback.class));
-    }
-
-    @Test
-    public void on_get_photos_button_tapped_and_camera_provided_presenter_constructs_path_with_camera() {
-        presenter.getPhotosButtonTapped("roverName", "camera", "");
-
-        verify(httpConnector).doRequest(matches("(https://mars-photos.herokuapp.com/api/v1/rovers/roverName/photos?.*.&camera=camera)"), any(HttpCallback.class));
-    }
-
-    @Test
-    public void on_get_photos_button_tapped_and_camera_not_provided_presenter_constructs_path_with_no_camera() {
-        presenter.getPhotosButtonTapped("roverName", "", "");
-
-        verify(httpConnector).doRequest(AdditionalMatchers.not(contains("&camera=")), any(HttpCallback.class));
-    }
-
-    @Test
-    public void on_get_photos_button_tapped_and_date_provided_presenter_constructs_path_with_date() {
-        presenter.getPhotosButtonTapped("roverName", "", "2017-01-01");
-
-        verify(httpConnector).doRequest(eq("https://mars-photos.herokuapp.com/api/v1/rovers/roverName/photos?earth_date=2017-01-01"), any(HttpCallback.class));
     }
 
 }
