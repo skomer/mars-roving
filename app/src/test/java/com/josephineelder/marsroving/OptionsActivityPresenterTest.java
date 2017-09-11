@@ -133,7 +133,7 @@ public class OptionsActivityPresenterTest {
         List<String> expectedCameraNames = new ArrayList<>();
         expectedCameraNames.add("camera");
 
-        presenter.roverSelected(0);
+        presenter.roverSelected("Rover");
 
         verify(view).showCameras(expectedCameraNames);
     }

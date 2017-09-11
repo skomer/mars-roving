@@ -8,7 +8,7 @@ public class OptionsActivityPresenter {
     private OptionsActivityView view;
     private JsonParsing parser;
     private HttpConnecting httpConnector;
-    List<Rover> rovers;
+    private List<Rover> rovers;
 
     public OptionsActivityPresenter(OptionsActivityView view, JsonParsing parser, HttpConnecting httpConnector) {
         this.view = view;
@@ -41,15 +41,18 @@ public class OptionsActivityPresenter {
         });
     }
 
-    public void roverSelected(int position) {
-        Rover rover = rovers.get(position);
-        List<String> roverNames = new ArrayList<>();
+    public void roverSelected(String roverName) {
+        List<String> cameraNames = new ArrayList<>();
 
-        for (int i = 0; i < rover.cameras.size(); i++) {
-            roverNames.add(rover.cameras.get(i).fullName);
+        for (int i = 0; i < rovers.size(); i++) {
+            if ((rovers.get(i).name).equals(roverName)) {
+                for (int j = 0; j < rovers.get(i).cameras.size(); j++) {
+                    cameraNames.add(rovers.get(i).cameras.get(j).fullName);
+                }
+            }
         }
 
-        view.showCameras(roverNames);
+        view.showCameras(cameraNames);
     }
 
     public void getPhotosButtonTapped(String roverName, String camera) {
@@ -71,13 +74,11 @@ public class OptionsActivityPresenter {
         httpConnector.doRequest(path, new HttpCallback() {
             @Override
             public void success(String json) {
-
-
+                view.displayMessage("Success with json\n" + json);
             }
             @Override
             public void failure(String responseCode) {
-
-
+                view.displayMessage("Failure with code\n" + responseCode);
             }
         });
     }
