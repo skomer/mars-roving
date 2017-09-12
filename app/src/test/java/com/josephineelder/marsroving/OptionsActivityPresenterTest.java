@@ -10,6 +10,7 @@ import java.util.List;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyListOf;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.contains;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.matches;
@@ -171,9 +172,9 @@ public class OptionsActivityPresenterTest {
 
     @Test
     public void when_selected_date_provided_presenter_asks_for_path_with_date() {
-        presenter.getPhotosButtonTapped("2017-01-01", "");
+        presenter.getPhotosButtonTapped("", "2017-01-01", "");
 
-        verify(urlBuilder).buildUrlWithEarthDate("roverName", "2017-01-01", "");
+        verify(urlBuilder).buildUrlWithEarthDate(anyString(), eq("2017-01-01"), anyString());
     }
 
 }
