@@ -2,7 +2,6 @@ package com.josephineelder.marsroving;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.AdditionalMatchers;
 import org.mockito.ArgumentCaptor;
 
 import java.util.ArrayList;
@@ -10,10 +9,9 @@ import java.util.List;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyListOf;
+import static org.mockito.Matchers.anyMapOf;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.contains;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.matches;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -24,6 +22,7 @@ public class OptionsActivityPresenterTest {
     private OptionsActivityView view;
     private JsonParsing parser;
     private HttpConnecting httpConnector;
+    private IRoverStorage roverStorage;
     private UrlBuilding urlBuilder;
     private OptionsActivityPresenter presenter;
 
@@ -32,8 +31,9 @@ public class OptionsActivityPresenterTest {
         view = mock(OptionsActivityView.class);
         parser = mock(JsonParsing.class);
         httpConnector = mock(HttpConnecting.class);
+        roverStorage = mock(IRoverStorage.class);
         urlBuilder = mock(UrlBuilding.class);
-        presenter = new OptionsActivityPresenter(view, parser, httpConnector, urlBuilder);
+        presenter = new OptionsActivityPresenter(view, parser, httpConnector, roverStorage, urlBuilder);
     }
 
     @Test
@@ -160,21 +160,14 @@ public class OptionsActivityPresenterTest {
         verify(view).showRovers(eq(expectedRoverNames));
     }
 
-//    @Test
-//    public void on_get_photos_button_tapped_presenter_tells_http_connector_to_make_request_with_path() {
-//        when(urlBuilder.buildUrl("", "", "")).thenReturn("path");
-//
-//        presenter.getPhotosButtonTapped("", "", "");
-//
-//        verify(urlBuilder).buildUrl("", "", "");
-//        verify(httpConnector).doRequest(eq("path"), any(HttpCallback.class));
-//    }
-
     @Test
-    public void when_selected_date_provided_presenter_asks_for_path_with_date() {
-        presenter.getPhotosButtonTapped("", "2017-01-01", "");
+    public void on_get_photos_button_tapped_presenter_tells_http_connector_to_make_request_with_path() {
+        when(urlBuilder.buildUrl(anyString(), anyMapOf(String.class, String.class))).thenReturn("path");
 
-        verify(urlBuilder).buildUrlWithEarthDate(anyString(), eq("2017-01-01"), anyString());
+        presenter.getPhotosButtonTapped("", "");
+
+        verify(urlBuilder).buildUrl(anyString(), anyMapOf(String.class, String.class));
+        verify(httpConnector).doRequest(eq("path"), any(HttpCallback.class));
     }
 
 }

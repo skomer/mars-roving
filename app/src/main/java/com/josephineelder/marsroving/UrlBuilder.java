@@ -1,31 +1,26 @@
 package com.josephineelder.marsroving;
 
+import java.util.Map;
+
 public class UrlBuilder implements UrlBuilding {
 
-    public String buildUrl(Rover selectedRover, String date, String camera) {
+    public String buildUrl(String roverName, Map<String, String> queryParams) {
         String basePath = "https://mars-photos.herokuapp.com/api/v1/rovers/";
         String path = basePath
-                + selectedRover.name
+                + roverName
                 + "/photos?";
 
-        if (null != date && !"".equals(date)) {
-            path += "earth_date=" + date;
-        }
-
-        if (null != camera && !"".equals(camera)) {
-            path += ""
-                    + "&camera="
-                    + camera;
-        }
+//        if (null != date && !"".equals(date)) {
+//            path += "earth_date=" + date;
+//        }
+//
+//        if (null != camera && !"".equals(camera)) {
+//            path += ""
+//                    + "&camera="
+//                    + camera;
+//        }
 
         return path;
     }
-
-    public String buildUrlWithEarthDate(String roverName, String selectedDate, String camera) {
-
-        return "";
-    }
-
-
 
 }

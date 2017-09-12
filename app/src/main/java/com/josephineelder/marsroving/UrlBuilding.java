@@ -1,9 +1,9 @@
 package com.josephineelder.marsroving;
 
+import java.util.Map;
+
 public interface UrlBuilding {
 
-    String buildUrl(Rover selectedRover, String date, String camera);
-
-    String buildUrlWithEarthDate(String roverName, String selectedDate, String camera);
+    String buildUrl(String roverName, Map<String, String> queryParams);
 
 }
