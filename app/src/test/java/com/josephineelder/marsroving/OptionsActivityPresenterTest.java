@@ -159,14 +159,21 @@ public class OptionsActivityPresenterTest {
         verify(view).showRovers(eq(expectedRoverNames));
     }
 
+//    @Test
+//    public void on_get_photos_button_tapped_presenter_tells_http_connector_to_make_request_with_path() {
+//        when(urlBuilder.buildUrl("", "", "")).thenReturn("path");
+//
+//        presenter.getPhotosButtonTapped("", "", "");
+//
+//        verify(urlBuilder).buildUrl("", "", "");
+//        verify(httpConnector).doRequest(eq("path"), any(HttpCallback.class));
+//    }
+
     @Test
-    public void on_get_photos_button_tapped_presenter_tells_http_connector_to_make_request_with_path() {
-        when(urlBuilder.buildUrl("", "", "")).thenReturn("path");
+    public void when_selected_date_provided_presenter_asks_for_path_with_date() {
+        presenter.getPhotosButtonTapped("2017-01-01", "");
 
-        presenter.getPhotosButtonTapped("", "", "");
-
-        verify(urlBuilder).buildUrl("", "", "");
-        verify(httpConnector).doRequest(eq("path"), any(HttpCallback.class));
+        verify(urlBuilder).buildUrlWithEarthDate("roverName", "2017-01-01", "");
     }
 
 }

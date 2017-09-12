@@ -10,6 +10,7 @@ public class OptionsActivityPresenter {
     private HttpConnecting httpConnector;
     private UrlBuilding urlBuilder;
     private List<Rover> rovers;
+    private Rover selectedRover;
 
     public OptionsActivityPresenter(OptionsActivityView view, JsonParsing parser, HttpConnecting httpConnector, UrlBuilding urlBuilder) {
         this.view = view;
@@ -48,6 +49,7 @@ public class OptionsActivityPresenter {
 
         for (int i = 0; i < rovers.size(); i++) {
             if ((rovers.get(i).name).equals(roverName)) {
+                selectedRover = rovers.get(i);
                 for (int j = 0; j < rovers.get(i).cameras.size(); j++) {
                     cameraNames.add(rovers.get(i).cameras.get(j).fullName);
                 }
@@ -58,8 +60,8 @@ public class OptionsActivityPresenter {
         view.showCameras(cameraNames);
     }
 
-    public void getPhotosButtonTapped(String roverName, String date, String camera) {
-        String path = urlBuilder.buildUrl(roverName, date, camera);
+    public void getPhotosButtonTapped(String date, String camera) {
+        String path = urlBuilder.buildUrl(selectedRover, date, camera);
 
         httpConnector.doRequest(path, new HttpCallback() {
             @Override

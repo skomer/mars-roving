@@ -2,10 +2,10 @@ package com.josephineelder.marsroving;
 
 public class UrlBuilder implements UrlBuilding {
 
-    public String buildUrl(String roverName, String date, String camera) {
+    public String buildUrl(Rover selectedRover, String date, String camera) {
         String basePath = "https://mars-photos.herokuapp.com/api/v1/rovers/";
         String path = basePath
-                + roverName
+                + selectedRover.name
                 + "/photos?";
 
         if (null != date && !"".equals(date)) {
@@ -21,6 +21,10 @@ public class UrlBuilder implements UrlBuilding {
         return path;
     }
 
+    public String buildUrlWithEarthDate(String roverName, String selectedDate, String camera) {
+
+        return "";
+    }
 
 
 
