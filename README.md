@@ -1,4 +1,4 @@
-# mars-roving
+# Mars Roving
 View images from NASA's three Mars Rover vehicles, updated daily
 
 ## Work in progress!
