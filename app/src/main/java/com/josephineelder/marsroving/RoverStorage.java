@@ -1,6 +1,5 @@
 package com.josephineelder.marsroving;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RoverStorage implements IRoverStorage {
@@ -23,8 +22,7 @@ public class RoverStorage implements IRoverStorage {
     }
 
     public Rover getSelectedRover() {
-
-        return new Rover("", "", "", new ArrayList<Camera>());
+        return selectedRover;
     }
 
 }

@@ -36,13 +36,14 @@ public class RoverStorageTest {
     public void get_selected_rover_returns_rover_previously_set() {
         List<Rover> rovers = new ArrayList<>();
         rovers.add(new Rover("", "", "", new ArrayList<Camera>()));
-        Rover expectedRover = new Rover("expectedRover", "", "", new ArrayList<Camera>());
-        rovers.add(expectedRover);
+        Rover selectedRover = new Rover("selectedRover", "", "", new ArrayList<Camera>());
+        rovers.add(selectedRover);
 
         storage.setKnownRovers(rovers);
+        storage.setSelectedRover("selectedRover");
         Rover actualRover = storage.getSelectedRover();
 
-        assertThat(actualRover, is(equalTo(expectedRover)));
+        assertThat(actualRover, is(equalTo(selectedRover)));
     }
 
 }
