@@ -15,7 +15,9 @@ public class UrlBuilder implements UrlBuilding {
 //        }
 
         String selectedCamera = queryParams.get("camera");
-        path += "&camera=" + selectedCamera;
+        if (null != selectedCamera) {
+            path += "&camera=" + selectedCamera;
+        }
 
         return path;
     }
