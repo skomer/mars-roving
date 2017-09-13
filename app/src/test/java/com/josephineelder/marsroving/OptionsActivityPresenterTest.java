@@ -122,23 +122,19 @@ public class OptionsActivityPresenterTest {
     @Test
     public void on_rover_selected_presenter_tells_view_to_show_cameras() {
         List<Camera> cameras = new ArrayList<>();
-        cameras.add(new Camera("CAM", "camera"));
+        cameras.add(new Camera("", "camera"));
         List<Rover> rovers = new ArrayList<>();
-        rovers.add(new Rover("Rover", "landing_date", "max_sol", cameras));
+        Rover selectedRover = new Rover("selectedRover", "", "", cameras);
+        rovers.add(selectedRover);
 
-        ArgumentCaptor<HttpCallback> captor = ArgumentCaptor.forClass(HttpCallback.class);
-        presenter.onResume();
-        verify(httpConnector).doRequest(any(String.class), captor.capture());
-        when(parser.getRovers("json")).thenReturn(rovers);
-
-        captor.getValue().success("json");
+        when(roverStorage.setSelectedRover("selectedRover")).thenReturn(selectedRover);
 
         List<String> expectedCameraNames = new ArrayList<>();
         expectedCameraNames.add("camera");
 
-        presenter.roverSelected("Rover");
+        presenter.roverSelected("selectedRover");
 
-        verify(view).showCameras(expectedCameraNames);
+        verify(view).showCameras(eq(expectedCameraNames));
     }
 
     @Test
