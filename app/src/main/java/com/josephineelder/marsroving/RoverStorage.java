@@ -5,8 +5,8 @@ import java.util.List;
 
 public class RoverStorage implements IRoverStorage {
 
-    Rover selectedRover;
-    List<Rover> knownRovers;
+    public Rover selectedRover;
+    public List<Rover> knownRovers;
 
     public void setKnownRovers(List<Rover> rovers) {
         knownRovers = rovers;
