@@ -158,6 +158,8 @@ public class OptionsActivityPresenterTest {
 
     @Test
     public void on_get_photos_button_tapped_presenter_tells_http_connector_to_make_request_with_path() {
+        Rover selectedRover = new Rover("selectedRover", "", "", new ArrayList<Camera>());
+        when(roverStorage.getSelectedRover()).thenReturn(selectedRover);
         when(urlBuilder.buildUrl(anyString(), anyMapOf(String.class, String.class))).thenReturn("path");
 
         presenter.getPhotosButtonTapped("", "");
