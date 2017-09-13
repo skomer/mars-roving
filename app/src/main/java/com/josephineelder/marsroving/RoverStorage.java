@@ -6,15 +6,20 @@ import java.util.List;
 public class RoverStorage implements IRoverStorage {
 
     Rover selectedRover;
-    List<Rover> rovers;
+    List<Rover> knownRovers;
 
     public void setKnownRovers(List<Rover> rovers) {
-
+        knownRovers = rovers;
     }
 
     public Rover setSelectedRover(String roverName) {
+        for (Rover rover : knownRovers) {
+            if (rover.name.equals(roverName)) {
+                selectedRover = rover;
+            }
+        }
 
-        return new Rover("", "", "", new ArrayList<Camera>());
+        return selectedRover;
     }
 
     public Rover getSelectedRover() {
