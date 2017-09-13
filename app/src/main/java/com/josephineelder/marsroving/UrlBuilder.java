@@ -13,12 +13,9 @@ public class UrlBuilder implements UrlBuilding {
 //        if (null != date && !"".equals(date)) {
 //            path += "earth_date=" + date;
 //        }
-//
-//        if (null != camera && !"".equals(camera)) {
-//            path += ""
-//                    + "&camera="
-//                    + camera;
-//        }
+
+        String selectedCamera = queryParams.get("camera");
+        path += "&camera=" + selectedCamera;
 
         return path;
     }

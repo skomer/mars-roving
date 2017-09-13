@@ -45,7 +45,6 @@ public class UrlBuilderTest {
     @Test
     public void when_camera_not_provided_builder_constructs_path_with_no_camera() {
         Map<String, String> queryParams = new HashMap<>();
-//        queryParams.put("camera", "");
 
         String actualUrl = builder.buildUrl("roverName", queryParams);
 
@@ -56,12 +55,14 @@ public class UrlBuilderTest {
     public void when_date_provided_builder_constructs_path_with_date() {
         Map<String, String> queryParams = new HashMap<>();
         queryParams.put("earth_date", "2017-01-01");
-//        queryParams.put("camera", "");
 
         String expectedUrl = "https://mars-photos.herokuapp.com/api/v1/rovers/roverName/photos?earth_date=2017-01-01";
         String actualUrl = builder.buildUrl("roverName", queryParams);
 
         assertEquals(expectedUrl, actualUrl);
     }
+
+    @Test
+    public void when_date_not_provided_builder_constructs_path_with_max_sol() {}
 
 }
