@@ -74,7 +74,11 @@ public class OptionsActivity extends AppCompatActivity implements OptionsActivit
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         switch (parent.getId()) {
             case R.id.rovers_spinner:
-                presenter.roverSelected(parent.getItemAtPosition(pos).toString());
+                String roverName = parent.getItemAtPosition(pos).toString();
+
+                if (!"".equals(roverName)) {
+                    presenter.roverSelected(parent.getItemAtPosition(pos).toString());
+                }
                 break;
         }
     }
