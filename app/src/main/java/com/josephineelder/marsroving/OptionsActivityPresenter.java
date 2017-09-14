@@ -1,19 +1,24 @@
 package com.josephineelder.marsroving;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class OptionsActivityPresenter {
 
     private OptionsActivityView view;
     private JsonParsing parser;
     private HttpConnecting httpConnector;
-    private List<Rover> rovers;
+    private UrlBuilding urlBuilder;
+    private IRoverStorage roverStorage;
 
-    public OptionsActivityPresenter(OptionsActivityView view, JsonParsing parser, HttpConnecting httpConnector) {
+    public OptionsActivityPresenter(OptionsActivityView view, JsonParsing parser, HttpConnecting httpConnector, IRoverStorage roverStorage, UrlBuilding urlBuilder) {
         this.view = view;
         this.parser = parser;
         this.httpConnector = httpConnector;
+        this.roverStorage = roverStorage;
+        this.urlBuilder = urlBuilder;
     }
 
     public void onResume() {
@@ -21,7 +26,8 @@ public class OptionsActivityPresenter {
             @Override
             public void success(String json) {
                 if (null != json && !"".equals(json)) {
-                    rovers = parser.getRovers(json);
+                    final List<Rover> rovers = parser.getRovers(json);
+                    roverStorage.setKnownRovers(rovers);
                     List<String> roverNames = new ArrayList<>();
                     roverNames.add("");
                     for (int i = 0; i < rovers.size(); i++) {
@@ -43,34 +49,28 @@ public class OptionsActivityPresenter {
 
     public void roverSelected(String roverName) {
         List<String> cameraNames = new ArrayList<>();
+        Rover selectedRover = roverStorage.setSelectedRover(roverName);
 
-        for (int i = 0; i < rovers.size(); i++) {
-            if ((rovers.get(i).name).equals(roverName)) {
-                for (int j = 0; j < rovers.get(i).cameras.size(); j++) {
-                    cameraNames.add(rovers.get(i).cameras.get(j).fullName);
-                }
-                break;
-            }
+        for (Camera camera : selectedRover.cameras) {
+            cameraNames.add(camera.fullName);
         }
 
         view.showCameras(cameraNames);
     }
 
-    public void getPhotosButtonTapped(String roverName, String camera, String date) {
-        String basePath = "https://mars-photos.herokuapp.com/api/v1/rovers/";
-        String path;
-        if (null != camera && !"".equals(camera)) {
-            path = basePath
-                    + roverName
-                    + "/photos?"
-                    + ""
-                    + "&camera="
-                    + camera;
-        } else {
-            path = basePath
-                    + roverName
-                    + "/photos?";
+    public void getPhotosButtonTapped(String date, String camera) {
+        Rover selectedRover = roverStorage.getSelectedRover();
+
+        Map<String, String> queryParams = new HashMap<>();
+        queryParams.put("max_sol", selectedRover.maxSol);
+        if (!"".equals(date)) {
+            queryParams.put("earth_date", date);
         }
+        if (!"".equals(camera)) {
+            queryParams.put("camera", camera);
+        }
+
+        String path = urlBuilder.buildUrl(selectedRover.name, queryParams);
 
         httpConnector.doRequest(path, new HttpCallback() {
             @Override

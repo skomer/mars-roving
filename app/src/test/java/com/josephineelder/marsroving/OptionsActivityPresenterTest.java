@@ -2,17 +2,18 @@ package com.josephineelder.marsroving;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.AdditionalMatchers;
 import org.mockito.ArgumentCaptor;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyListOf;
-import static org.mockito.Matchers.contains;
+import static org.mockito.Matchers.anyMapOf;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.matches;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -23,6 +24,8 @@ public class OptionsActivityPresenterTest {
     private OptionsActivityView view;
     private JsonParsing parser;
     private HttpConnecting httpConnector;
+    private IRoverStorage roverStorage;
+    private UrlBuilding urlBuilder;
     private OptionsActivityPresenter presenter;
 
     @Before
@@ -30,7 +33,9 @@ public class OptionsActivityPresenterTest {
         view = mock(OptionsActivityView.class);
         parser = mock(JsonParsing.class);
         httpConnector = mock(HttpConnecting.class);
-        presenter = new OptionsActivityPresenter(view, parser, httpConnector);
+        roverStorage = mock(IRoverStorage.class);
+        urlBuilder = mock(UrlBuilding.class);
+        presenter = new OptionsActivityPresenter(view, parser, httpConnector, roverStorage, urlBuilder);
     }
 
     @Test
@@ -119,23 +124,19 @@ public class OptionsActivityPresenterTest {
     @Test
     public void on_rover_selected_presenter_tells_view_to_show_cameras() {
         List<Camera> cameras = new ArrayList<>();
-        cameras.add(new Camera("CAM", "camera"));
+        cameras.add(new Camera("", "camera"));
         List<Rover> rovers = new ArrayList<>();
-        rovers.add(new Rover("Rover", "landing_date", "max_sol", cameras));
+        Rover selectedRover = new Rover("selectedRover", "", "", cameras);
+        rovers.add(selectedRover);
 
-        ArgumentCaptor<HttpCallback> captor = ArgumentCaptor.forClass(HttpCallback.class);
-        presenter.onResume();
-        verify(httpConnector).doRequest(any(String.class), captor.capture());
-        when(parser.getRovers("json")).thenReturn(rovers);
-
-        captor.getValue().success("json");
+        when(roverStorage.setSelectedRover("selectedRover")).thenReturn(selectedRover);
 
         List<String> expectedCameraNames = new ArrayList<>();
         expectedCameraNames.add("camera");
 
-        presenter.roverSelected("Rover");
+        presenter.roverSelected("selectedRover");
 
-        verify(view).showCameras(expectedCameraNames);
+        verify(view).showCameras(eq(expectedCameraNames));
     }
 
     @Test
@@ -158,38 +159,28 @@ public class OptionsActivityPresenterTest {
     }
 
     @Test
-    public void on_get_photos_button_tapped_presenter_tells_http_connector_to_make_request() {
-        presenter.getPhotosButtonTapped("", "", "");
+    public void on_get_photos_button_tapped_presenter_passes_params_to_url_builder() {
+        Rover selectedRover = new Rover("selectedRover", "", "1000", new ArrayList<Camera>());
+        when(roverStorage.getSelectedRover()).thenReturn(selectedRover);
 
-        verify(httpConnector).doRequest(any(String.class), any(HttpCallback.class));
+        Map<String, String> expectedQueryParams = new HashMap<>();
+        expectedQueryParams.put("max_sol", "1000");
+
+        presenter.getPhotosButtonTapped("", "");
+
+        verify(urlBuilder).buildUrl(eq("selectedRover"), eq(expectedQueryParams));
     }
 
     @Test
-    public void on_get_photos_button_tapped_presenter_constructs_path_with_this_stem() {
-        presenter.getPhotosButtonTapped("roverName", "", "");
+    public void on_get_photos_button_tapped_presenter_tells_http_connector_to_make_request_with_path() {
+        Rover selectedRover = new Rover("selectedRover", "", "", new ArrayList<Camera>());
+        when(roverStorage.getSelectedRover()).thenReturn(selectedRover);
+        when(urlBuilder.buildUrl(anyString(), anyMapOf(String.class, String.class))).thenReturn("path");
 
-        verify(httpConnector).doRequest(matches("(https://mars-photos.herokuapp.com/api/v1/rovers/roverName/photos?.*)"), any(HttpCallback.class));
-    }
+        presenter.getPhotosButtonTapped("", "");
 
-    @Test
-    public void on_get_photos_button_tapped_and_camera_provided_presenter_constructs_path_with_camera() {
-        presenter.getPhotosButtonTapped("roverName", "camera", "");
-
-        verify(httpConnector).doRequest(matches("(https://mars-photos.herokuapp.com/api/v1/rovers/roverName/photos?.*.&camera=camera)"), any(HttpCallback.class));
-    }
-
-    @Test
-    public void on_get_photos_button_tapped_and_camera_not_provided_presenter_constructs_path_with_no_camera() {
-        presenter.getPhotosButtonTapped("roverName", "", "");
-
-        verify(httpConnector).doRequest(AdditionalMatchers.not(contains("&camera=")), any(HttpCallback.class));
-    }
-
-    @Test
-    public void on_get_photos_button_tapped_and_date_provided_presenter_constructs_path_with_date() {
-        presenter.getPhotosButtonTapped("roverName", "", "2017-01-01");
-
-        verify(httpConnector).doRequest(eq("https://mars-photos.herokuapp.com/api/v1/rovers/roverName/photos?earth_date=2017-01-01"), any(HttpCallback.class));
+        verify(urlBuilder).buildUrl(anyString(), anyMapOf(String.class, String.class));
+        verify(httpConnector).doRequest(eq("path"), any(HttpCallback.class));
     }
 
 }
