@@ -62,7 +62,13 @@ public class OptionsActivityPresenter {
         Rover selectedRover = roverStorage.getSelectedRover();
 
         Map<String, String> queryParams = new HashMap<>();
-        // insert params
+        queryParams.put("max_sol", selectedRover.maxSol);
+        if (!"".equals(date)) {
+            queryParams.put("earth_date", date);
+        }
+        if (!"".equals(camera)) {
+            queryParams.put("camera", camera);
+        }
 
         String path = urlBuilder.buildUrl(selectedRover.name, queryParams);
 

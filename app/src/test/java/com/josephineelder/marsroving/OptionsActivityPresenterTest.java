@@ -160,13 +160,13 @@ public class OptionsActivityPresenterTest {
 
     @Test
     public void on_get_photos_button_tapped_presenter_passes_params_to_url_builder() {
-        Rover selectedRover = new Rover("selectedRover", "", "", new ArrayList<Camera>());
+        Rover selectedRover = new Rover("selectedRover", "", "1000", new ArrayList<Camera>());
         when(roverStorage.getSelectedRover()).thenReturn(selectedRover);
 
         Map<String, String> expectedQueryParams = new HashMap<>();
         expectedQueryParams.put("max_sol", "1000");
 
-        presenter.getPhotosButtonTapped("selectedRover", "");
+        presenter.getPhotosButtonTapped("", "");
 
         verify(urlBuilder).buildUrl(eq("selectedRover"), eq(expectedQueryParams));
     }
