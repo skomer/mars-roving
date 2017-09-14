@@ -65,4 +65,7 @@ public class UrlBuilderTest {
     @Test
     public void when_date_not_provided_builder_constructs_path_with_max_sol() {}
 
+
+
+
 }

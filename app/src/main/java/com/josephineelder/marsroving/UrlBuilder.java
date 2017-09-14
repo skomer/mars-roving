@@ -10,9 +10,11 @@ public class UrlBuilder implements UrlBuilding {
                 + roverName
                 + "/photos?";
 
-//        if (null != date && !"".equals(date)) {
-//            path += "earth_date=" + date;
-//        }
+        String selectedDate = queryParams.get("earth_date");
+
+        if (null != selectedDate) {
+            path += "earth_date=" + selectedDate;
+        }
 
         String selectedCamera = queryParams.get("camera");
         if (null != selectedCamera) {
