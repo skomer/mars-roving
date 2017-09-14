@@ -63,7 +63,15 @@ public class UrlBuilderTest {
     }
 
     @Test
-    public void when_date_not_provided_builder_constructs_path_with_max_sol() {}
+    public void when_date_not_provided_builder_constructs_path_with_max_sol() {
+        Map<String, String> queryParams = new HashMap<>();
+        queryParams.put("max_sol", "1000");
+
+        String expectedUrl = "https://mars-photos.herokuapp.com/api/v1/rovers/roverName/photos?sol=1000";
+        String actualUrl = builder.buildUrl("roverName", queryParams);
+
+        assertEquals(expectedUrl, actualUrl);
+    }
 
 
 
