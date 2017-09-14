@@ -5,7 +5,9 @@ import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyListOf;
@@ -154,6 +156,19 @@ public class OptionsActivityPresenterTest {
         captor.getValue().success("json");
 
         verify(view).showRovers(eq(expectedRoverNames));
+    }
+
+    @Test
+    public void on_get_photos_button_tapped_presenter_passes_params_to_url_builder() {
+        Rover selectedRover = new Rover("selectedRover", "", "", new ArrayList<Camera>());
+        when(roverStorage.getSelectedRover()).thenReturn(selectedRover);
+
+        Map<String, String> expectedQueryParams = new HashMap<>();
+        expectedQueryParams.put("max_sol", "1000");
+
+        presenter.getPhotosButtonTapped("selectedRover", "");
+
+        verify(urlBuilder).buildUrl(eq("selectedRover"), eq(expectedQueryParams));
     }
 
     @Test
