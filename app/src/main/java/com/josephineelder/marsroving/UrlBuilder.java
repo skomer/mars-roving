@@ -14,6 +14,9 @@ public class UrlBuilder implements UrlBuilding {
 
         if (null != selectedDate) {
             path += "earth_date=" + selectedDate;
+        } else {
+            String maxSol = queryParams.get("max_sol");
+            path += "sol=" + maxSol;
         }
 
         String selectedCamera = queryParams.get("camera");
