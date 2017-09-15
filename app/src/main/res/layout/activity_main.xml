@@ -8,21 +8,34 @@
     tools:context="com.josephineelder.marsroving.OptionsActivity">
 
     <Spinner
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:id="@+id/rovers_spinner" />
 
     <Spinner
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:id="@+id/cameras_spinner" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/date_textview" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select a date"
+        android:layout_margin="10dp"
+        android:id="@+id/select_date_button" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:text="GET PHOTOS"
         android:id="@+id/get_photos_button" />
 
 </android.support.v7.widget.LinearLayoutCompat>

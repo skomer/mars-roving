@@ -84,4 +84,7 @@ public class OptionsActivityPresenter {
         });
     }
 
+    public void dateSet(String s) {
+        view.displayMessage(s);
+    }
 }
